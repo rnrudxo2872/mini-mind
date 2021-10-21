@@ -6,5 +6,7 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
     body
-        span hi
-        script(src="socket.io/socket.io.js") 
+        div#message-box
+        form(id="message-form", action="") 
+            input(id="insert-msg-box", type="text", name="insert-msg-box")
+        script(src="/assets/js/main.js")

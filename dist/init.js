@@ -9,5 +9,9 @@ var PORT = process.env.PORT || 8000;
 var httpServer = server_1.default.listen(PORT, function () {
     return console.log("server now listen " + PORT + "\uD83D\uDE0A");
 });
-var IO = new socket_io_1.default.Server().listen(httpServer);
-IO.on("connection", function (socket) { return console.log(socket.id); });
+var IO = new socket_io_1.default.Server({ serveClient: false }).listen(httpServer);
+IO.on("connection", function (socket) {
+    socket.on("sendMsg", function (input) {
+        socket.broadcast.emit("getMsg", input);
+    });
+});

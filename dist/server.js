@@ -8,5 +8,6 @@ var server = (0, express_1.default)();
 server.set("views", process.cwd() + "/src/views");
 server.set("view engine", "pug");
 server.set("x-powered-by", false);
+server.use("/assets", express_1.default.static(process.cwd() + "/dist/client"));
 server.use("/", function (req, res) { return res.render("main"); });
 exports.default = server;
