@@ -111,6 +111,28 @@ eval("/**\n * Parses an URI\n *\n * @author Steven Levithan <stevenlevithan.com>
 
 /***/ }),
 
+/***/ "./src/client/components/chat-app.ts":
+/*!*******************************************!*\
+  !*** ./src/client/components/chat-app.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.ChatApp = void 0;\r\nclass ChatApp extends HTMLElement {\r\n    constructor() {\r\n        super();\r\n    }\r\n    connectedCallback() {\r\n        const messageBox = document.createElement(\"div\");\r\n        messageBox.id = \"message-box\";\r\n        const form = document.createElement(\"form\");\r\n        form.id = \"message-form\";\r\n        const inputBox = document.createElement(\"input\");\r\n        inputBox.type = \"text\";\r\n        inputBox.id = \"insert-msg-box\";\r\n        const submitBtn = document.createElement(\"button\");\r\n        submitBtn.innerText = \"전송\";\r\n        form.appendChild(inputBox);\r\n        form.appendChild(submitBtn);\r\n        this.appendChild(messageBox);\r\n        this.appendChild(form);\r\n    }\r\n}\r\nexports.ChatApp = ChatApp;\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/components/chat-app.ts?");
+
+/***/ }),
+
+/***/ "./src/client/components/default.ts":
+/*!******************************************!*\
+  !*** ./src/client/components/default.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst chat_app_1 = __webpack_require__(/*! ./chat-app */ \"./src/client/components/chat-app.ts\");\r\ncustomElements.define(\"chat-app\", chat_app_1.ChatApp);\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/components/default.ts?");
+
+/***/ }),
+
 /***/ "./src/client/js/device-split.ts":
 /*!***************************************!*\
   !*** ./src/client/js/device-split.ts ***!
@@ -129,7 +151,7 @@ eval("\r\nconsole.log(navigator.userAgent);\r\n\n\n//# sourceURL=webpack://chat-
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n__webpack_require__(/*! ../scss/style.scss */ \"./src/client/scss/style.scss\");\r\n__webpack_require__(/*! ./device-split */ \"./src/client/js/device-split.ts\");\r\n__webpack_require__(/*! ./main */ \"./src/client/js/main.ts\");\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/index.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n__webpack_require__(/*! ../components/default */ \"./src/client/components/default.ts\");\r\n__webpack_require__(/*! ../scss/style.scss */ \"./src/client/scss/style.scss\");\r\n__webpack_require__(/*! ./device-split */ \"./src/client/js/device-split.ts\");\r\n__webpack_require__(/*! ./main */ \"./src/client/js/main.ts\");\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/index.ts?");
 
 /***/ }),
 
@@ -140,7 +162,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nvar socket_io_client_1 = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/build/cjs/index.js\");\r\nvar insertBox = document.getElementById(\"insert-msg-box\");\r\nvar messageForm = document.getElementById(\"message-form\");\r\nvar messageBox = document.getElementById(\"message-box\");\r\nvar socket = (0, socket_io_client_1.io)();\r\nfunction send(data) {\r\n    socket.emit(\"sendMsg\", data);\r\n    var element = getOtherMessage({ user: \"나\", msg: data.msg });\r\n    messageBox.appendChild(element);\r\n}\r\nfunction getOtherMessage(data) {\r\n    var user = data.user, msg = data.msg;\r\n    var messageContainer = document.createElement(\"div\");\r\n    var userElement = document.createElement(\"div\");\r\n    userElement.innerText = user;\r\n    var messageElement = document.createElement(\"div\");\r\n    messageElement.innerText = msg;\r\n    messageContainer.appendChild(userElement);\r\n    messageContainer.appendChild(messageElement);\r\n    return messageContainer;\r\n}\r\nsocket.on(\"getMsg\", function (data) {\r\n    var element = getOtherMessage(data);\r\n    messageBox.appendChild(element);\r\n});\r\nvar handleMsgSubmit = function (event) {\r\n    event.preventDefault();\r\n    var data = {\r\n        msg: insertBox.value,\r\n        user: \"unknown\",\r\n    };\r\n    send(data);\r\n    insertBox.value = \"\";\r\n};\r\nmessageForm.addEventListener(\"submit\", handleMsgSubmit);\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/main.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst socket_io_client_1 = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/build/cjs/index.js\");\r\nconst insertBox = document.getElementById(\"insert-msg-box\");\r\nconst messageForm = document.getElementById(\"message-form\");\r\nconst messageBox = document.getElementById(\"message-box\");\r\nconst socket = (0, socket_io_client_1.io)();\r\nfunction send(data) {\r\n    socket.emit(\"sendMsg\", data);\r\n    const element = getOtherMessage({ user: \"나\", msg: data.msg });\r\n    messageBox.appendChild(element);\r\n}\r\nfunction getOtherMessage(data) {\r\n    const { user, msg } = data;\r\n    const messageContainer = document.createElement(\"div\");\r\n    const userElement = document.createElement(\"div\");\r\n    userElement.innerText = user;\r\n    const messageElement = document.createElement(\"div\");\r\n    messageElement.innerText = msg;\r\n    messageContainer.appendChild(userElement);\r\n    messageContainer.appendChild(messageElement);\r\n    return messageContainer;\r\n}\r\nsocket.on(\"getMsg\", (data) => {\r\n    const element = getOtherMessage(data);\r\n    messageBox.appendChild(element);\r\n});\r\nconst handleMsgSubmit = (event) => {\r\n    event.preventDefault();\r\n    const data = {\r\n        msg: insertBox.value,\r\n        user: \"unknown\",\r\n    };\r\n    send(data);\r\n    insertBox.value = \"\";\r\n};\r\nmessageForm.addEventListener(\"submit\", handleMsgSubmit);\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/main.ts?");
 
 /***/ }),
 
