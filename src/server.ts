@@ -1,13 +1,15 @@
+import ejs from "ejs";
 import express from "express";
 
 const server = express();
 
 server.set("views", `${process.cwd()}/src/views`);
-server.set("view engine", "pug");
+server.set("view engine", "ejs");
 server.set("x-powered-by", false);
+server.engine("html", ejs.renderFile);
 
 server.use("/assets", express.static(`${process.cwd()}/dist/client`));
 
-server.use("/", (req, res) => res.render("main"));
+server.use("/", (req, res) => res.render("main.html"));
 
 export default server;

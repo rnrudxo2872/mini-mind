@@ -70,6 +70,17 @@ eval("\n/**\n * Module exports.\n *\n * Logic borrowed from Modernizr:\n *\n *  
 
 /***/ }),
 
+/***/ "./src/client/scss/style.scss":
+/*!************************************!*\
+  !*** ./src/client/scss/style.scss ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://chat-game/./src/client/scss/style.scss?");
+
+/***/ }),
+
 /***/ "./node_modules/ms/index.js":
 /*!**********************************!*\
   !*** ./node_modules/ms/index.js ***!
@@ -97,6 +108,28 @@ eval("/**\n * Compiles a querystring\n * Returns string representation of the ob
 /***/ ((module) => {
 
 eval("/**\n * Parses an URI\n *\n * @author Steven Levithan <stevenlevithan.com> (MIT license)\n * @api private\n */\n\nvar re = /^(?:(?![^:@]+:[^:@\\/]*@)(http|https|ws|wss):\\/\\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\\/?#]*)(?::(\\d*))?)(((\\/(?:[^?#](?![^?#\\/]*\\.[^?#\\/.]+(?:[?#]|$)))*\\/?)?([^?#\\/]*))(?:\\?([^#]*))?(?:#(.*))?)/;\n\nvar parts = [\n    'source', 'protocol', 'authority', 'userInfo', 'user', 'password', 'host', 'port', 'relative', 'path', 'directory', 'file', 'query', 'anchor'\n];\n\nmodule.exports = function parseuri(str) {\n    var src = str,\n        b = str.indexOf('['),\n        e = str.indexOf(']');\n\n    if (b != -1 && e != -1) {\n        str = str.substring(0, b) + str.substring(b, e).replace(/:/g, ';') + str.substring(e, str.length);\n    }\n\n    var m = re.exec(str || ''),\n        uri = {},\n        i = 14;\n\n    while (i--) {\n        uri[parts[i]] = m[i] || '';\n    }\n\n    if (b != -1 && e != -1) {\n        uri.source = src;\n        uri.host = uri.host.substring(1, uri.host.length - 1).replace(/;/g, ':');\n        uri.authority = uri.authority.replace('[', '').replace(']', '').replace(/;/g, ':');\n        uri.ipv6uri = true;\n    }\n\n    uri.pathNames = pathNames(uri, uri['path']);\n    uri.queryKey = queryKey(uri, uri['query']);\n\n    return uri;\n};\n\nfunction pathNames(obj, path) {\n    var regx = /\\/{2,9}/g,\n        names = path.replace(regx, \"/\").split(\"/\");\n\n    if (path.substr(0, 1) == '/' || path.length === 0) {\n        names.splice(0, 1);\n    }\n    if (path.substr(path.length - 1, 1) == '/') {\n        names.splice(names.length - 1, 1);\n    }\n\n    return names;\n}\n\nfunction queryKey(uri, query) {\n    var data = {};\n\n    query.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function ($0, $1, $2) {\n        if ($1) {\n            data[$1] = $2;\n        }\n    });\n\n    return data;\n}\n\n\n//# sourceURL=webpack://chat-game/./node_modules/parseuri/index.js?");
+
+/***/ }),
+
+/***/ "./src/client/js/device-split.ts":
+/*!***************************************!*\
+  !*** ./src/client/js/device-split.ts ***!
+  \***************************************/
+/***/ (() => {
+
+"use strict";
+eval("\r\nconsole.log(navigator.userAgent);\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/device-split.ts?");
+
+/***/ }),
+
+/***/ "./src/client/js/index.ts":
+/*!********************************!*\
+  !*** ./src/client/js/index.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n__webpack_require__(/*! ../scss/style.scss */ \"./src/client/scss/style.scss\");\r\n__webpack_require__(/*! ./device-split */ \"./src/client/js/device-split.ts\");\r\n__webpack_require__(/*! ./main */ \"./src/client/js/main.ts\");\r\n\n\n//# sourceURL=webpack://chat-game/./src/client/js/index.ts?");
 
 /***/ }),
 
@@ -435,7 +468,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexpo
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/client/js/main.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/client/js/index.ts");
 /******/ 	
 /******/ })()
 ;
