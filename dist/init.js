@@ -10,6 +10,7 @@ const httpServer = server_1.default.listen(PORT, () => console.log(`server now l
 const IO = new socket_io_1.default.Server({ serveClient: false }).listen(httpServer);
 IO.on("connection", (socket) => {
     socket.on("sendMsg", (input) => {
+        console.log(input);
         socket.broadcast.emit("getMsg", input);
     });
 });

@@ -11,6 +11,7 @@ const httpServer = server.listen(PORT, () =>
 const IO = new socketIO.Server({ serveClient: false }).listen(httpServer);
 IO.on("connection", (socket) => {
   socket.on("sendMsg", (input: MessageDTO) => {
+    console.log(input);
     socket.broadcast.emit("getMsg", input);
   });
 });
