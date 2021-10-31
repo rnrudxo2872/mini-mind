@@ -7,6 +7,7 @@ export class ChatApp extends HTMLElement {
   inputBox: HTMLInputElement;
   submitBtn: HTMLButtonElement;
   messageBox: HTMLDivElement;
+  chatIcon: HTMLButtonElement;
 
   constructor() {
     super();
@@ -18,11 +19,18 @@ export class ChatApp extends HTMLElement {
     this.inputBox = document.createElement("input");
     this.submitBtn = document.createElement("button");
 
+    this.chatIcon = document.createElement("button");
+
     this.socket = io();
     this.setSocket();
+    this.setInitIcon();
     this.setElements();
     this.setStyle();
     this.setEvent();
+  }
+
+  setInitIcon() {
+    this.chatIcon.innerHTML = "chat here";
   }
 
   setElements() {
@@ -48,8 +56,7 @@ export class ChatApp extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot?.appendChild(this.messageBox);
-    this.shadowRoot?.appendChild(this.form);
+    this.shadowRoot?.appendChild(this.chatIcon);
   }
 
   send(data: MessageData) {
@@ -95,7 +102,14 @@ export class ChatApp extends HTMLElement {
     this.inputBox.value = "";
   }
 
+  handleClickIcon(this: ChatApp, event: Event) {
+    this.chatIcon.style.display = "none";
+    this.shadowRoot?.appendChild(this.messageBox);
+    this.shadowRoot?.appendChild(this.form);
+  }
+
   setEvent() {
     this.form.addEventListener("submit", this.handleMsgSubmit.bind(this));
+    this.chatIcon.addEventListener("click", this.handleClickIcon.bind(this));
   }
 }
