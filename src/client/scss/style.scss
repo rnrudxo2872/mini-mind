@@ -3,3 +3,9 @@ html, body {
     width: 100%;
     margin: 0;
 }
+
+chat-app {
+    position: fixed;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    right: 24px;
+}

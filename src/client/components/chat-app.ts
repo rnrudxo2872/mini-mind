@@ -8,6 +8,7 @@ export class ChatApp extends HTMLElement {
   submitBtn: HTMLButtonElement;
   messageBox: HTMLDivElement;
   chatIcon: HTMLButtonElement;
+  closeBtn: HTMLElement;
 
   constructor() {
     super();
@@ -18,6 +19,7 @@ export class ChatApp extends HTMLElement {
     this.form = document.createElement("form");
     this.inputBox = document.createElement("input");
     this.submitBtn = document.createElement("button");
+    this.closeBtn = document.createElement("i");
 
     this.chatIcon = document.createElement("button");
 
@@ -34,17 +36,35 @@ export class ChatApp extends HTMLElement {
   }
 
   setElements() {
-    this.messageBox.id = "message-box";
-
-    this.form.id = "message-form";
-
-    this.inputBox.type = "text";
-    this.inputBox.id = "insert-msg-box";
-
-    this.submitBtn.innerText = "전송";
+    this.setMessageBox();
+    this.setForm();
+    this.setInputBox();
+    this.setSubmitBtn();
+    this.setCloseBtn();
 
     this.form.appendChild(this.inputBox);
     this.form.appendChild(this.submitBtn);
+  }
+
+  setCloseBtn() {
+    this.closeBtn.className = "fas fa-times";
+  }
+
+  setSubmitBtn() {
+    this.submitBtn.innerText = "전송";
+  }
+
+  setInputBox() {
+    this.inputBox.type = "text";
+    this.inputBox.id = "insert-msg-box";
+  }
+
+  setForm() {
+    this.form.id = "message-form";
+  }
+
+  setMessageBox() {
+    this.messageBox.id = "message-box";
   }
 
   setStyle() {
@@ -90,6 +110,16 @@ export class ChatApp extends HTMLElement {
     });
   }
 
+  switchOn() {
+    const fragment = document.createDocumentFragment();
+
+    fragment.appendChild(this.closeBtn);
+    fragment.appendChild(this.messageBox);
+    fragment.appendChild(this.form);
+
+    this.shadowRoot?.append(fragment);
+  }
+
   handleMsgSubmit(this: ChatApp, event: Event) {
     event.preventDefault();
 
@@ -102,10 +132,9 @@ export class ChatApp extends HTMLElement {
     this.inputBox.value = "";
   }
 
-  handleClickIcon(this: ChatApp, event: Event) {
+  handleClickIcon(this: ChatApp) {
     this.chatIcon.style.display = "none";
-    this.shadowRoot?.appendChild(this.messageBox);
-    this.shadowRoot?.appendChild(this.form);
+    this.switchOn();
   }
 
   setEvent() {
