@@ -4,3 +4,8 @@
 #message-form {
     display: flex;   
 }
+.chat__close {
+    cursor: default;
+    color: rgb(168, 166, 163);
+    font-weight: 600;
+}

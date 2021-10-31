@@ -19,7 +19,7 @@ export class ChatApp extends HTMLElement {
     this.form = document.createElement("form");
     this.inputBox = document.createElement("input");
     this.submitBtn = document.createElement("button");
-    this.closeBtn = document.createElement("i");
+    this.closeBtn = document.createElement("span");
 
     this.chatIcon = document.createElement("button");
 
@@ -47,7 +47,8 @@ export class ChatApp extends HTMLElement {
   }
 
   setCloseBtn() {
-    this.closeBtn.className = "fas fa-times";
+    this.closeBtn.className = "chat__close";
+    this.closeBtn.innerText = "X";
   }
 
   setSubmitBtn() {
@@ -68,11 +69,21 @@ export class ChatApp extends HTMLElement {
   }
 
   setStyle() {
+    const linkFragment = new DocumentFragment();
+
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = "/assets/components/css/chat-app.css";
 
-    this.shadowRoot?.appendChild(styleLink);
+    const IconLink = document.createElement("link");
+    IconLink.rel = "stylesheet";
+    IconLink.href =
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css";
+
+    linkFragment.appendChild(styleLink);
+    linkFragment.appendChild(IconLink);
+
+    this.shadowRoot?.appendChild(linkFragment);
   }
 
   connectedCallback() {
@@ -111,7 +122,7 @@ export class ChatApp extends HTMLElement {
   }
 
   switchOn() {
-    const fragment = document.createDocumentFragment();
+    const fragment = new DocumentFragment();
 
     fragment.appendChild(this.closeBtn);
     fragment.appendChild(this.messageBox);
