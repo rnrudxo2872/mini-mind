@@ -1,71 +1,40 @@
 import { io } from "socket.io-client";
 import { MessageData } from "../interfaces/msginterface";
+import { ChatAppBtn } from "./chat-app-btn";
+import { ChatAppRender } from "./chat-app-render";
 
 export class ChatApp extends HTMLElement {
   socket: any;
-  form: HTMLFormElement;
-  inputBox: HTMLInputElement;
-  submitBtn: HTMLButtonElement;
-  messageBox: HTMLDivElement;
-  chatIcon: HTMLButtonElement;
-  closeBtn: HTMLElement;
+  chatBtn: HTMLDivElement;
+  chatRend: HTMLDivElement;
 
   constructor() {
     super();
-
     this.attachShadow({ mode: "open" });
 
-    this.messageBox = document.createElement("div");
-    this.form = document.createElement("form");
-    this.inputBox = document.createElement("input");
-    this.submitBtn = document.createElement("button");
-    this.closeBtn = document.createElement("span");
+    this.chatBtn = document.createElement("div");
+    this.setChatBtn();
 
-    this.chatIcon = document.createElement("button");
+    this.chatRend = document.createElement("div");
+    this.setChatRend();
 
     this.socket = io();
     this.setSocket();
-    this.setInitIcon();
-    this.setElements();
     this.setStyle();
     this.setEvent();
+
+    this.render();
   }
 
-  setInitIcon() {
-    this.chatIcon.innerHTML = "chat here";
+  setChatBtn() {
+    this.chatBtn.classList.add("chat-btn");
+    new ChatAppBtn({ $target: this.chatBtn });
   }
 
-  setElements() {
-    this.setMessageBox();
-    this.setForm();
-    this.setInputBox();
-    this.setSubmitBtn();
-    this.setCloseBtn();
-
-    this.form.appendChild(this.inputBox);
-    this.form.appendChild(this.submitBtn);
-  }
-
-  setCloseBtn() {
-    this.closeBtn.className = "chat__close";
-    this.closeBtn.innerText = "X";
-  }
-
-  setSubmitBtn() {
-    this.submitBtn.innerText = "전송";
-  }
-
-  setInputBox() {
-    this.inputBox.type = "text";
-    this.inputBox.id = "insert-msg-box";
-  }
-
-  setForm() {
-    this.form.id = "message-form";
-  }
-
-  setMessageBox() {
-    this.messageBox.id = "message-box";
+  setChatRend() {
+    this.chatRend.classList.add("chat-render");
+    this.chatRend.classList.add("hide");
+    new ChatAppRender({ $target: this.chatRend });
   }
 
   setStyle() {
@@ -75,81 +44,70 @@ export class ChatApp extends HTMLElement {
     styleLink.rel = "stylesheet";
     styleLink.href = "/assets/components/css/chat-app.css";
 
-    const IconLink = document.createElement("link");
-    IconLink.rel = "stylesheet";
-    IconLink.href =
-      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css";
-
     linkFragment.appendChild(styleLink);
-    linkFragment.appendChild(IconLink);
 
     this.shadowRoot?.appendChild(linkFragment);
   }
 
   connectedCallback() {
-    this.shadowRoot?.appendChild(this.chatIcon);
+    // this.shadowRoot?.appendChild(this.chatIcon);
   }
 
   send(data: MessageData) {
-    this.socket.emit("sendMsg", data);
-    const element = this.getOtherMessage({ user: "나", msg: data.msg });
-    this.messageBox.appendChild(element);
+    // this.socket.emit("sendMsg", data);
+    // const element = this.getOtherMessage({ user: "나", msg: data.msg });
+    // this.messageBox.appendChild(element);
   }
 
   getOtherMessage(data: MessageData) {
-    const { user, msg } = data;
-
-    const messageContainer = document.createElement("div");
-    messageContainer.className = "one-msg__container";
-
-    const userElement = document.createElement("div");
-    userElement.innerText = user;
-
-    const messageElement = document.createElement("div");
-    messageElement.innerText = msg;
-
-    messageContainer.appendChild(userElement);
-    messageContainer.appendChild(messageElement);
-
-    return messageContainer;
+    // const { user, msg } = data;
+    // const messageContainer = document.createElement("div");
+    // messageContainer.className = "one-msg__container";
+    // const userElement = document.createElement("div");
+    // userElement.innerText = user;
+    // const messageElement = document.createElement("div");
+    // messageElement.innerText = msg;
+    // messageContainer.appendChild(userElement);
+    // messageContainer.appendChild(messageElement);
+    // return messageContainer;
   }
 
   setSocket() {
-    this.socket.on("getMsg", (data: MessageData) => {
-      const element = this.getOtherMessage(data);
-      this.messageBox.appendChild(element);
-    });
-  }
-
-  switchOn() {
-    const fragment = new DocumentFragment();
-
-    fragment.appendChild(this.closeBtn);
-    fragment.appendChild(this.messageBox);
-    fragment.appendChild(this.form);
-
-    this.shadowRoot?.append(fragment);
+    // this.socket.on("getMsg", (data: MessageData) => {
+    //   const element = this.getOtherMessage(data);
+    //   this.messageBox.appendChild(element);
+    // });
   }
 
   handleMsgSubmit(this: ChatApp, event: Event) {
-    event.preventDefault();
-
-    const data = {
-      msg: this.inputBox.value,
-      user: "unknown",
-    };
-    this.send(data);
-
-    this.inputBox.value = "";
+    // event.preventDefault();
+    // const data = {
+    //   msg: this.inputBox.value,
+    //   user: "unknown",
+    // };
+    // this.send(data);
+    // this.inputBox.value = "";
   }
 
-  handleClickIcon(this: ChatApp) {
-    this.chatIcon.style.display = "none";
-    this.switchOn();
+  handleStartChat(this: ChatApp) {
+    this.chatBtn.classList.add("hide");
+    this.chatRend.classList.remove("hide");
+  }
+
+  handleClickCloseBtn(this: ChatApp) {
+    // this.switchOff()
   }
 
   setEvent() {
-    this.form.addEventListener("submit", this.handleMsgSubmit.bind(this));
-    this.chatIcon.addEventListener("click", this.handleClickIcon.bind(this));
+    this.chatBtn.addEventListener("click", this.handleStartChat.bind(this));
+  }
+
+  render() {
+    const fragment = new DocumentFragment();
+    // fragment.appendChild(this.chatIcon);
+    fragment.appendChild(this.chatBtn);
+    fragment.appendChild(this.chatRend);
+
+    this.shadowRoot?.appendChild(fragment);
   }
 }
