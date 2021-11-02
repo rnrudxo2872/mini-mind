@@ -12,14 +12,15 @@ export class ChatApp extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
 
+    this.socket = io();
+    this.setSocket();
+
     this.chatBtn = document.createElement("div");
     this.setChatBtn();
 
     this.chatRend = document.createElement("div");
     this.setChatRend();
 
-    this.socket = io();
-    this.setSocket();
     this.setStyle();
     this.setEvent();
 
@@ -34,7 +35,13 @@ export class ChatApp extends HTMLElement {
   setChatRend() {
     this.chatRend.classList.add("chat-render");
     this.chatRend.classList.add("hide");
-    new ChatAppRender({ $target: this.chatRend });
+    new ChatAppRender({
+      $target: this.chatRend,
+      socket: this.socket,
+      CloseClick: (): void => {
+        this.chatBtn.classList.remove("hide");
+      },
+    });
   }
 
   setStyle() {
@@ -104,7 +111,7 @@ export class ChatApp extends HTMLElement {
 
   render() {
     const fragment = new DocumentFragment();
-    // fragment.appendChild(this.chatIcon);
+
     fragment.appendChild(this.chatBtn);
     fragment.appendChild(this.chatRend);
 

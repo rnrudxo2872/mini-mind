@@ -9,8 +9,20 @@ const PORT = process.env.PORT || 8000;
 const httpServer = server_1.default.listen(PORT, () => console.log(`server now listen ${PORT}😊`));
 const IO = new socket_io_1.default.Server({ serveClient: false }).listen(httpServer);
 IO.on("connection", (socket) => {
+    const rooms = [];
     socket.on("sendMsg", (input) => {
         console.log(input);
         socket.broadcast.emit("getMsg", input);
+    });
+    socket.on("getRooms", (_) => {
+        socket.emit("returnRooms", rooms);
+    });
+    socket.on("joinRoom", (data) => {
+        const { num, name } = data;
+    });
+    socket.on("createRoom", (data) => {
+        const { name } = data;
+        rooms.push(name);
+        console.log(rooms);
     });
 });
