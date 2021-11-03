@@ -10,7 +10,12 @@ export class ChatAppBtn {
   }
 
   setInitIcon() {
-    this.chatIcon.innerHTML = "chat here";
+    this.chatIcon.classList.add("chat-start__btn");
+
+    const icon = document.createElement("img");
+    icon.src = "/chat-icon/cowChat.png";
+
+    this.chatIcon.appendChild(icon);
   }
 
   render() {
