@@ -12,6 +12,8 @@ export class ChatAppRender {
   enteredRoom: boolean;
   rooms: { num: number; name: string }[];
   closeClick: () => void;
+  welcomeSpeech: HTMLDivElement;
+  welcomeSpeechContainer: HTMLDivElement;
 
   constructor({
     $target,
@@ -26,6 +28,9 @@ export class ChatAppRender {
     this.rooms = [];
     this.socket = socket;
     this.enteredRoom = false;
+
+    this.welcomeSpeechContainer = document.createElement("div");
+    this.welcomeSpeech = document.createElement("h1");
 
     this.messageBox = document.createElement("div");
     this.form = document.createElement("form");
@@ -73,6 +78,8 @@ export class ChatAppRender {
   }
 
   setElements() {
+    this.setWelcomeSpeech();
+
     this.setMessageBox();
     this.setForm();
     this.setInputBox();
@@ -81,6 +88,15 @@ export class ChatAppRender {
 
     this.form.appendChild(this.inputBox);
     this.form.appendChild(this.submitBtn);
+  }
+
+  setWelcomeSpeech() {
+    this.welcomeSpeechContainer.classList.add("welcome-container");
+
+    this.welcomeSpeech.classList.add("welcome__main");
+    this.welcomeSpeech.innerText = `${this.socket.id}님 환영합니다!`;
+
+    this.welcomeSpeechContainer.appendChild(this.welcomeSpeech);
   }
 
   setCloseBtn() {
@@ -204,6 +220,7 @@ export class ChatAppRender {
     const fragment = new DocumentFragment();
 
     fragment.appendChild(this.closeBtn);
+    fragment.appendChild(this.welcomeSpeechContainer);
 
     if (this.enteredRoom) {
       fragment.appendChild(this.messageBox);
