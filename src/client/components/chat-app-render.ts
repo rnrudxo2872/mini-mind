@@ -131,11 +131,16 @@ export class ChatAppRender {
     this.createRoomBtn.classList.add("hide");
     this.createRoomInput.classList.remove("hide");
     this.createRoomInputBtn.classList.remove("hide");
+    this.createRoomInput.focus();
   }
 
   createRoomInputKeyHandler(event: KeyboardEvent) {
     if (event.key === "Enter") {
       this.submitCreateRoom();
+    }
+    if (event.key === "Escape") {
+      this.switchCreateElement();
+      this.createRoomInput.value = "";
     }
   }
 

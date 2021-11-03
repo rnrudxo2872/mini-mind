@@ -13,12 +13,13 @@ $shadow-basic:rgba($color: #000000, $alpha: 0.4);
 }
 .chat-btn {
     .chat-start__btn {
-        background-color: transparent;
-        border-radius: 10px;
-        border: 1px solid rgba($color: #0a0a0a, $alpha: 0.3);
-        box-shadow: 1px 2px 1px $shadow-basic;
         width: 68px;
         height: 65px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid rgba($color: #0a0a0a, $alpha: 0.1);
+        box-shadow: 1px 2px 1px $shadow-basic;
+        opacity: 0.7;
 
         img {
             width: 100%;
