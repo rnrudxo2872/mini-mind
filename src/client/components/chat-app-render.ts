@@ -14,6 +14,8 @@ export class ChatAppRender {
   closeClick: () => void;
   welcomeSpeech: HTMLDivElement;
   welcomeSpeechContainer: HTMLDivElement;
+  chatRoomsContainer: HTMLElement;
+  chatUserOperatorSection: HTMLDivElement;
 
   constructor({
     $target,
@@ -38,6 +40,9 @@ export class ChatAppRender {
     this.submitBtn = document.createElement("button");
     this.closeBtn = document.createElement("span");
 
+    this.chatRoomsContainer = document.createElement("article");
+
+    this.chatUserOperatorSection = document.createElement("div");
     this.createRoomBtn = document.createElement("button");
     this.createRoomInput = document.createElement("input");
     this.createRoomInputBtn = document.createElement("button");
@@ -54,13 +59,13 @@ export class ChatAppRender {
   }
 
   setRoomBtn() {
-    this.createRoomBtn.classList.add("chat__createBtn");
+    this.createRoomBtn.classList.add("chat__createBtn", "btn");
     this.createRoomBtn.innerText = "채팅방 만들기";
 
-    this.createRoomInput.classList.add("chat__createInput");
+    this.createRoomInput.classList.add("chat__createInput", "insert-box");
     this.createRoomInput.classList.add("hide");
 
-    this.createRoomInputBtn.classList.add("chat__createBtn");
+    this.createRoomInputBtn.classList.add("chat__createBtn", "btn");
     this.createRoomInputBtn.classList.add("hide");
     this.createRoomInputBtn.innerText = "만들기";
   }
@@ -86,8 +91,24 @@ export class ChatAppRender {
     this.setSubmitBtn();
     this.setCloseBtn();
 
+    this.setChatRoomsContainer();
+
+    this.setUserOperatorElements();
+
     this.form.appendChild(this.inputBox);
     this.form.appendChild(this.submitBtn);
+  }
+
+  setUserOperatorElements() {
+    this.chatUserOperatorSection.classList.add("user-operators-container");
+
+    this.chatUserOperatorSection.appendChild(this.createRoomBtn);
+    this.chatUserOperatorSection.appendChild(this.createRoomInput);
+    this.chatUserOperatorSection.appendChild(this.createRoomInputBtn);
+  }
+
+  setChatRoomsContainer() {
+    this.chatRoomsContainer.classList.add("chat__room-container");
   }
 
   setWelcomeSpeech() {
@@ -191,6 +212,8 @@ export class ChatAppRender {
   }
 
   setRoomElement(fragment: DocumentFragment) {
+    fragment.appendChild(this.chatRoomsContainer);
+
     if (this.rooms.length === 0) {
       this.setEmptyRoomElement(fragment);
       return;
@@ -198,7 +221,7 @@ export class ChatAppRender {
 
     this.rooms.forEach((room) => {
       const item = this.getOneRoomElement(room);
-      fragment.appendChild(item);
+      this.chatRoomsContainer.appendChild(item);
     });
   }
 
@@ -210,9 +233,7 @@ export class ChatAppRender {
   }
 
   setBtns(fragment: DocumentFragment) {
-    fragment.appendChild(this.createRoomBtn);
-    fragment.appendChild(this.createRoomInput);
-    fragment.appendChild(this.createRoomInputBtn);
+    fragment.appendChild(this.chatUserOperatorSection);
   }
 
   render() {
