@@ -115,18 +115,28 @@ export class ChatAppRender {
       "click",
       this.submitCreateRoom.bind(this)
     );
+    this.createRoomInput.addEventListener(
+      "keydown",
+      this.createRoomInputKeyHandler.bind(this)
+    );
     // this.form.addEventListener("submit", this.handleMsgSubmit.bind(this));
   }
 
-  closeBtnHandler(event: Event) {
+  closeBtnHandler() {
     this.$target.classList.add("hide");
     this.closeClick();
   }
 
-  createBtnClickHnadler(event: Event) {
+  createBtnClickHnadler() {
     this.createRoomBtn.classList.add("hide");
     this.createRoomInput.classList.remove("hide");
     this.createRoomInputBtn.classList.remove("hide");
+  }
+
+  createRoomInputKeyHandler(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      this.submitCreateRoom();
+    }
   }
 
   submitCreateRoom() {
