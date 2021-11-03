@@ -64,8 +64,7 @@ export class ChatAppRender {
     this.socket.emit("getRooms");
     this.socket.on("returnRooms", (rooms: []) => {
       this.rooms = rooms;
-      console.log(rooms);
-      console.log(this.socket.id);
+      this.render();
     });
   }
 
@@ -156,7 +155,7 @@ export class ChatAppRender {
 
   createOneRoom(name: string) {
     this.socket.emit("createRoom", { name });
-    this.rooms.push({ num: 0, name });
+    this.socket.emit("getRooms");
   }
 
   getOneRoomElement(room: any): HTMLDivElement {
