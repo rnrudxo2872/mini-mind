@@ -6,13 +6,15 @@ import { SocketRoom, SocketUser } from "./interfaces/socket.interface";
 class ChatSocket {
   IO: socketIO.Server;
   userList: Map<string, SocketUser>;
+  rooms: SocketRoom[];
 
   constructor(server: Server) {
     this.IO = new socketIO.Server({ serveClient: false }).listen(server);
     this.userList = new Map();
+    this.rooms = [];
 
     this.IO.on("connection", (socket: Socket) => {
-      const rooms: SocketRoom[] = [];
+      console.log(`${socket.id}가 입장!`);
 
       this.userList.set(socket.id, {
         hasRoomsCnt: 0,
@@ -26,7 +28,8 @@ class ChatSocket {
       });
 
       socket.on("getRooms", (_) => {
-        socket.emit("returnRooms", rooms);
+        socket.emit("returnRooms", this.rooms);
+        socket.broadcast.emit("returnRooms", this.rooms);
       });
 
       socket.on("joinRoom", (data: any) => {
@@ -39,8 +42,8 @@ class ChatSocket {
         if (!this.isValidCreateRoom(socket.id)) return;
         this.setUserInfo(socket.id);
 
-        rooms.push({ num: rooms.length, name, userName: socket.id });
-        console.log(rooms);
+        this.rooms.push({ num: this.rooms.length, name, userName: socket.id });
+        console.log(this.rooms);
       });
     });
   }

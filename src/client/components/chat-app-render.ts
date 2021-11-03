@@ -8,10 +8,10 @@ export class ChatAppRender {
   $target: HTMLElement;
   createRoomBtn: HTMLButtonElement;
   createRoomInput: HTMLInputElement;
+  createRoomInputBtn: HTMLButtonElement;
   enteredRoom: boolean;
   rooms: { num: number; name: string }[];
   closeClick: () => void;
-  createRoomInputBtn: HTMLButtonElement;
 
   constructor({
     $target,
