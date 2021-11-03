@@ -65,6 +65,7 @@ export class ChatAppRender {
     this.socket.on("returnRooms", (rooms: []) => {
       this.rooms = rooms;
       console.log(rooms);
+      console.log(this.socket.id);
     });
   }
 
